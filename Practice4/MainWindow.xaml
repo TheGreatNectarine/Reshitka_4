@@ -1,0 +1,115 @@
+﻿<Window Name="mainWindow" x:Class="Practice02.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Practice02"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="430" Width="430">
+    <Window.Resources>
+        <SolidColorBrush x:Key="WindowBrush"  Color="#2C373E"/>
+    </Window.Resources>
+    <Grid Name="MainGrid" Margin="30">
+        <Grid.ColumnDefinitions >
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="83"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="65"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="0,0,11,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+        </Grid>
+        <Button Name="proceedButton" Command="{Binding ProceedCommand}" Grid.Row="0" Grid.Column="0" Content="Proceed" Grid.ColumnSpan="2" Margin="0,0,1,0">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Button.Background" Value="#66B089"/>
+                    <Setter Property="Button.FontSize" Value="16"/>
+                    <Setter Property="Button.Foreground" Value="White"/>
+                    <Setter Property="Button.BorderBrush" Value="#66B089"/>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Label Grid.Row="1" Grid.Column="0" Content="First Name*"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,41,0,0">
+            <Label.Style>
+                <Style>
+                    <Setter Property="Label.FontSize" Value="25"/>
+                    <Setter Property="Label.Foreground" Value="White"/>
+                </Style>
+            </Label.Style>
+        </Label>
+        <Label Grid.Row="1" Grid.Column="1" Content="Last Name*"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,41,0,0">
+            <Label.Style>
+                <Style>
+                    <Setter Property="Label.FontSize" Value="25"/>
+                    <Setter Property="Label.Foreground" Value="White"/>
+                </Style>
+            </Label.Style>
+        </Label>
+        <TextBox Name="FirstName" Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="0" VerticalContentAlignment="Center" Margin="0,10,5,10" Padding="5,0,0,0">
+            <TextBox.Style>
+                <Style>
+                    <Setter Property="TextBox.Background" Value="#2C373E"/>
+                    <Setter Property="TextBox.BorderThickness" Value="1"/>
+                    <Setter Property="TextBox.Foreground" Value="#7FD1D1D1"/>
+                    <Setter Property="TextBox.FontSize" Value="20"/>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+        <TextBox Name="LastName" Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" VerticalContentAlignment="Center" Margin="5,10,0,10" Padding="5,0,0,0">
+            <TextBox.Style>
+                <Style>
+                    <Setter Property="TextBox.Background" Value="#2C373E"/>
+                    <Setter Property="TextBox.BorderThickness" Value="1"/>
+                    <Setter Property="TextBox.Foreground" Value="#7FD1D1D1"/>
+                    <Setter Property="TextBox.FontSize" Value="20"/>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+        <Label Grid.Row="3" Content="Email*"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.ColumnSpan="2" Margin="0,9,0,41" Grid.RowSpan="2">
+            <Label.Style>
+                <Style>
+                    <Setter Property="Label.FontSize" Value="25"/>
+                    <Setter Property="Label.Foreground" Value="White"/>
+                </Style>
+            </Label.Style>
+        </Label>
+        <TextBox Name="Email" Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="4" VerticalContentAlignment="Center" Margin="0,10" Padding="5,0,0,0" Grid.ColumnSpan="2">
+            <TextBox.Style>
+                <Style>
+                    <Setter Property="TextBox.Background" Value="#2C373E"/>
+                    <Setter Property="TextBox.BorderThickness" Value="1"/>
+                    <Setter Property="TextBox.Foreground" Value="#7FD1D1D1"/>
+                    <Setter Property="TextBox.FontSize" Value="20"/>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+        <DatePicker Name="DateOfBirth" SelectedDate="{Binding DateOfBirth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,10">
+            <DatePicker.Style>
+                <Style>
+                    <Setter Property="DatePicker.FontSize" Value="22"/>
+                    <Setter Property="DatePicker.Background" Value="White"/>
+                    <Setter Property="DatePicker.Foreground" Value="#7FD1D1D1"/>
+                    <Setter Property="DatePicker.Opacity" Value="1"/>
+                    <Setter Property="DatePicker.BorderThickness" Value="1"/>
+                </Style>
+            </DatePicker.Style>
+        </DatePicker>
+
+    </Grid>
+
+    <Window.Style>
+        <Style TargetType="{x:Type Window}">
+            <Setter Property="Background" Value="{StaticResource WindowBrush}"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+        </Style>
+    </Window.Style>
+</Window>
