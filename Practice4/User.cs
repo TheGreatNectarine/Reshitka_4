@@ -147,6 +147,14 @@ namespace Practice4
             new SignInValidator(this);
         }
 
+        public void CopyUser(User u)
+        {
+            _firstName = u.FirstName;
+            _lastName = u.LastName;
+            _email = u.Email;
+            _dateOfBirth = u.DateOfBirth;
+        }
+
         private void Serialize([NotNull] string filename)
         {
             IFormatter formatter = new BinaryFormatter();
@@ -177,10 +185,9 @@ namespace Practice4
                 return null;
             }
         }
-        
+
         public static async void Preload(List<User> users)
         {
-            MessageBox.Show(users.ToString() ?? "null");
             await Task.Run(() =>
             {
                 if (!Directory.Exists(_DATA_FILEPATH))
@@ -204,7 +211,15 @@ namespace Practice4
             {
                 u.Serialize(Path.Combine(_DATA_FILEPATH, string.Format(_PERSON_FILE_TEMPLATE, i++)));
             });
+            string extraFile;
+            while(File.Exists(extraFile = Path.Combine(_DATA_FILEPATH, string.Format(_PERSON_FILE_TEMPLATE, i++))))
+            {
+                File.Delete(extraFile);
+            }
         }
+
+        public delegate void SerializeAllDelegate([NotNull] List<User> users);
+
     }
 
     internal static class UserGenerator

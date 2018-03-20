@@ -7,14 +7,14 @@ using System.Windows;
 
 namespace Practice4
 {
-    class SignInViewModel : INotifyPropertyChanged
+    class PersonCreationViewModel : INotifyPropertyChanged
     {
         private string _firstName;
         private string _lastName;
         private string _email;
         private DateTime _dateOfBirth;
         private RelayCommand _signInCommand;
-        private readonly AllUsersViewModel.DelegateAddUser _addUserAction;
+        private readonly AllUsersViewModel.DelegateAddUser _proceedAction;
         private readonly PersonCreationWindow.DelegateCloseWindow _closeAction;
 
         public string FirstName
@@ -61,7 +61,7 @@ namespace Practice4
         {
             get
             {
-                return _signInCommand ?? (_signInCommand = new RelayCommand(SignUpImpl,
+                return _signInCommand ?? (_signInCommand = new RelayCommand(ProceedImpl,
                            o => !String.IsNullOrWhiteSpace(_firstName) &&
                                 !String.IsNullOrWhiteSpace(_lastName) &&
                                 !String.IsNullOrWhiteSpace(_email) &&
@@ -70,10 +70,17 @@ namespace Practice4
             }
         }
 
-        public SignInViewModel(PersonCreationWindow.DelegateCloseWindow closeWindow, AllUsersViewModel.DelegateAddUser addUser)
+        public PersonCreationViewModel(PersonCreationWindow.DelegateCloseWindow closeWindow, AllUsersViewModel.DelegateAddUser addUser, User u=null)
         {
             _closeAction = closeWindow;
-            _addUserAction = addUser;
+            _proceedAction = addUser;
+            if (u != null)
+            {
+                FirstName = u.FirstName;
+                LastName = u.LastName;
+                Email = u.Email;
+                DateOfBirth = u.DateOfBirth;
+            }
         }
 
         private bool IsDateValid(DateTime date)
@@ -81,16 +88,13 @@ namespace Practice4
             return date < DateTime.Today && date.Year > 1920;
         }
 
-        private async void SignUpImpl(object o)
+        private async void ProceedImpl(object o)
         {
             await Task.Run((() =>
             {
-                MessageBox.Show("Loading");
-                Thread.Sleep(2000);
-                MessageBox.Show("Finished");
+                //ЫЫЫЫЫЫ СУУКАААА
             }));
-
-            _addUserAction(new User(_firstName, _lastName, _email, _dateOfBirth));
+            _proceedAction(new User(_firstName, _lastName, _email, _dateOfBirth));
             _closeAction();
         }
 

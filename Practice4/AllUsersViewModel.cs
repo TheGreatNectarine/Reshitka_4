@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace Practice4
 {
@@ -10,7 +11,11 @@ namespace Practice4
 
         private RelayCommand _deleteSelectedUser;
 
-        private AllUsersWindow.GetSelectedIndexDelegate _getSelectedIndex;
+        private RelayCommand _serialize;
+
+        private RelayCommand _editCommand;
+
+        private AllUsersWindow.GetSelectedIndexDelegate _getSelectedUser;
 
         private AllUsersWindow.UpdateGridDelegate _update;
 
@@ -28,7 +33,23 @@ namespace Practice4
         {
             get
             {
-                return _deleteSelectedUser ?? (_deleteSelectedUser = new RelayCommand(DeleteSelectedUserImp, o => _getSelectedIndex() != -1));
+                return _deleteSelectedUser ?? (_deleteSelectedUser = new RelayCommand(DeleteSelectedUserImp, o => true));
+            }
+        }
+
+        public RelayCommand Serialize
+        {
+            get
+            {
+                return _serialize ?? (_serialize = new RelayCommand(SerializeImp, o => true));
+            }
+        }
+
+        public RelayCommand EditCommand
+        {
+            get
+            {
+                return _editCommand ?? (_editCommand = new RelayCommand(EditImp, o => true));
             }
         }
 
@@ -40,29 +61,45 @@ namespace Practice4
 
         private void DeleteSelectedUserImp(object o)
         {
-            var index = _getSelectedIndex();
-            if (index != -1)
-            {
-                Users.RemoveAt(index);
-            }
+            var user = _getSelectedUser() as User;
+
+            Users.Remove(user);
+
             _update(Users);
+        }
+
+        private void SerializeImp(object o)
+        {
+            User.SerializeAll(Users);
+        }
+
+        private void EditImp(object o)
+        {
+            var toEdit = _getSelectedUser() as User;
+            var editWindow = new PersonCreationWindow(delegate (User edited)
+            {
+                toEdit.CopyUser(edited);
+            }, toEdit);
+            editWindow.Show();
         }
 
         public AllUsersViewModel(AllUsersWindow.UpdateGridDelegate updateDelegate, AllUsersWindow.GetSelectedIndexDelegate getSelectedIndexDelegate)
         {
             _update = updateDelegate;
-            _getSelectedIndex = getSelectedIndexDelegate;
+            _getSelectedUser = getSelectedIndexDelegate;
             Users = new List<User>();
             User.Preload(Users);
         }
 
         public delegate void DelegateAddUser(User u);
 
+        public delegate void DelegateEditUser(User u);
+
         private void AddUser(User u)
         {
             Users.Add(u);
         }
-               
+                             
         #region Implementation
         public event PropertyChangedEventHandler PropertyChanged;
 

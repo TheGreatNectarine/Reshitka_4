@@ -63,7 +63,7 @@
     <Compile Include="RelayCommand.cs" />
     <Compile Include="SerializeHelper.cs" />
     <Compile Include="SignInValidator.cs" />
-    <Compile Include="SignInViewModel.cs" />
+    <Compile Include="PersonCreationViewModel.cs" />
     <Compile Include="SortHelper.cs" />
     <Compile Include="StationManager.cs" />
     <Page Include="AllUsersWindow.xaml">
@@ -112,6 +112,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="papich.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="apple.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

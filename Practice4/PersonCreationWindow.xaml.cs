@@ -10,10 +10,10 @@ namespace Practice4
     public partial class PersonCreationWindow : Window
     {
 
-        public PersonCreationWindow(AllUsersViewModel.DelegateAddUser delegateAddPerson)
+        public PersonCreationWindow(AllUsersViewModel.DelegateAddUser delegateAddPerson, User u=null)
         {
-           InitializeComponent();
-           DataContext = new SignInViewModel(CloseWindow, delegateAddPerson);
+            InitializeComponent();
+            DataContext = new PersonCreationViewModel(CloseWindow, delegateAddPerson, u);
         }
 
         public delegate void DelegateCloseWindow();
@@ -23,30 +23,9 @@ namespace Practice4
             this.Close();
         }
 
-        private void ShowResultView()
-        {
-            //var user = ValidUser();
-            //if (user == null)
-            //{
-            //    MessageBox.Show("Incorrect person was created. Try again");
-            //    return;
-            //}
-            //var bday = user.IsBirthday ? "Happy Birthday" : "";
-            //MessageBox.Show(
-            //    $"Name: {user.FirstName}\n" +
-            //    $"Surname: {user.LastName}\n" +
-            //    $"Email: {user.Email}\n" +
-            //    $"Date of birth: {user.DateOfBirth}\n" +
-            //    $"Adult: {user.IsAdult}\n" +
-            //    $"Sign: {user.SunSign}\n" +
-            //    $"Chinese Sign: {user.ChineseSign}\n" +
-            //    $"{bday}"
-            //);
-        }
-
         private User ValidUser()
         {
-            var data = DataContext as SignInViewModel;
+            var data = DataContext as PersonCreationViewModel;
             User user = null;
             try
             {

@@ -14,13 +14,13 @@ namespace Practice4
             DataContext = new AllUsersViewModel(UpdateGrid, GetSelectedIndex);
         }
 
-        public delegate int GetSelectedIndexDelegate();
+        public delegate object GetSelectedIndexDelegate();
 
         public delegate void UpdateGridDelegate(List<User> users);
 
-        private int GetSelectedIndex()
+        private object GetSelectedIndex()
         {
-            return UsersGrid.SelectedIndex;
+            return UsersGrid.SelectedItem;
         }
 
         private void UpdateGrid(List<User> users)
