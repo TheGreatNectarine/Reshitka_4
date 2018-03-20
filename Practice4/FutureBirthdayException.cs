@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Practice02
+namespace Practice4
 {
     internal class FutureBirthdayException : Exception
     {

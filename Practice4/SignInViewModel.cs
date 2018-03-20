@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Practice02
+namespace Practice4
 {
     class SignInViewModel : INotifyPropertyChanged
     {
@@ -14,7 +14,8 @@ namespace Practice02
         private string _email;
         private DateTime _dateOfBirth;
         private RelayCommand _signInCommand;
-        private readonly Action _signInSuccessAction;
+        private readonly AllUsersViewModel.DelegateAddUser _addUserAction;
+        private readonly PersonCreationWindow.DelegateCloseWindow _closeAction;
 
         public string FirstName
         {
@@ -69,9 +70,10 @@ namespace Practice02
             }
         }
 
-        public SignInViewModel(Action signInSuccessAction)
+        public SignInViewModel(PersonCreationWindow.DelegateCloseWindow closeWindow, AllUsersViewModel.DelegateAddUser addUser)
         {
-            _signInSuccessAction = signInSuccessAction;
+            _closeAction = closeWindow;
+            _addUserAction = addUser;
         }
 
         private bool IsDateValid(DateTime date)
@@ -87,8 +89,9 @@ namespace Practice02
                 Thread.Sleep(2000);
                 MessageBox.Show("Finished");
             }));
-            
-             _signInSuccessAction.Invoke();            
+
+            _addUserAction(new User(_firstName, _lastName, _email, _dateOfBirth));
+            _closeAction();
         }
 
         #region Implementation

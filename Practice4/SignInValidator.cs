@@ -4,19 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Practice02
+namespace Practice4
 {
     internal class SignInValidator
     {
-        private Person _person;
+        private User _person;
 
-        public SignInValidator(Person person)
+        public SignInValidator(User person)
         {
             _person = person;
             Validate();
         }
 
-        public static void ValidateBirthday(Person person)
+        public static void ValidateBirthday(User person)
         {
             if (person.DateOfBirth >= DateTime.Today)
             {
@@ -28,7 +28,7 @@ namespace Practice02
             }
         }
 
-        public static void ValidateEmail(Person person)
+        public static void ValidateEmail(User person)
         {
             if (!CorrectEmail(person))
             {
@@ -36,7 +36,7 @@ namespace Practice02
             }
         }
 
-        public static bool CorrectEmail(Person person)
+        public static bool CorrectEmail(User person)
         {
             try
             {
