@@ -13,8 +13,12 @@ namespace Practice4
                     return SortedByFirstName(people, ascending);
                 case "last name":
                     return SortedByLastName(people, ascending);
-                case "date of birth":
+                case "birth date":
                     return SortedByDateOfBirth(people, ascending);
+                case "sun sign":
+                    return SortedBySunSign(people, ascending);
+                case "chinese sign":
+                    return SortedByChineseSign(people, ascending);
                 default: return people;
             }
         }
@@ -44,5 +48,25 @@ namespace Practice4
             }
             return (from p in people orderby p.DateOfBirth descending select p).ToList();
         }
+
+        private static List<User> SortedByChineseSign(List<User> people, bool ascending)
+        {
+            if (ascending)
+            {
+                return (from p in people orderby p.ChineseSign ascending select p).ToList();
+            }
+            return (from p in people orderby p.ChineseSign descending select p).ToList();
+        }
+
+        private static List<User> SortedBySunSign(List<User> people, bool ascending)
+        {
+            if (ascending)
+            {
+                return (from p in people orderby p.SunSign ascending select p).ToList();
+            }
+            return (from p in people orderby p.SunSign descending select p).ToList();
+        }
+
+
     }
 }

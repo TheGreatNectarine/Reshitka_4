@@ -30,7 +30,7 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <ComboBox Grid.Row="0">
+            <ComboBox  Name="SortItems" Grid.Row="0" Text="{Binding SortProperty, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
                 <ComboBoxItem>
                     First Name
                 </ComboBoxItem>
@@ -38,16 +38,7 @@
                     Last Name
                 </ComboBoxItem>
                 <ComboBoxItem>
-                    Email
-                </ComboBoxItem>
-                <ComboBoxItem>
                     Birth Date
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    Is Birthday
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    Is Adult
                 </ComboBoxItem>
                 <ComboBoxItem>
                     Sun Sign
@@ -56,35 +47,9 @@
                     Chinese Sign
                 </ComboBoxItem>
             </ComboBox>
-            <Button Grid.Row="2" Name="Sort"> SORT! </Button>
-            <Image Grid.Row="3" Grid.RowSpan="3" Source="apple.png"/>
-            <ComboBox Grid.Row="6">
-                <ComboBoxItem>
-                    First Name
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    Last Name
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    Email
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    Birth Date
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    Is Birthday
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    Is Adult
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    Sun Sign
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    Chinese Sign
-                </ComboBoxItem>
-            </ComboBox>
-            <Button Grid.Row="8" Name="Filter">Filter!</Button>
+            <Button Grid.Row="2" Name="Sort" Command="{Binding SortCommand}"> SORT! </Button>
+            <TextBox Grid.Row="6"/>
+            <Button Grid.Row="8" Name="Filter" Command="{Binding FilterCommand}">Filter!</Button>
 
         </Grid>
         <DataGrid Grid.Column="1" Grid.ColumnSpan="3" x:Name="UsersGrid" HorizontalGridLinesBrush="DarkGray"

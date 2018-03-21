@@ -7,19 +7,29 @@ namespace Practice4
 {
     public class AllUsersViewModel : INotifyPropertyChanged
     {
+        private int _sortOrder = 0;
         private RelayCommand _addNewUserCommand;
-
         private RelayCommand _deleteSelectedUser;
-
         private RelayCommand _serialize;
-
         private RelayCommand _editCommand;
-
+        private RelayCommand _sortCommand;
+        private RelayCommand _filterCommand;
         private AllUsersWindow.GetSelectedIndexDelegate _getSelectedUser;
-
         private AllUsersWindow.UpdateGridDelegate _update;
+        private AllUsersWindow.GetSelectedSortItemDelegate _getSelectedSortItem;
 
-        public List<User> Users { get; }
+        public List<User> DisplayableUsers { get; set; }
+
+        private List<User> InnerUsers { get; set; }
+
+        public string SortProperty
+        {
+            get
+            {
+                return _getSelectedSortItem() ?? "Select item";
+            }
+            set { }
+        }
 
         public RelayCommand AddNewUserCommand
         {
@@ -33,6 +43,7 @@ namespace Practice4
         {
             get
             {
+
                 return _deleteSelectedUser ?? (_deleteSelectedUser = new RelayCommand(DeleteSelectedUserImp, o => true));
             }
         }
@@ -53,24 +64,42 @@ namespace Practice4
             }
         }
 
+        public RelayCommand SortCommand
+        {
+            get
+            {
+                return _sortCommand ?? (_sortCommand = new RelayCommand(SortImp, o => _getSelectedSortItem() != null));
+            }
+        }
+
+        public RelayCommand FilterCommand
+        {
+            get
+            {
+                return _filterCommand ?? (_filterCommand = new RelayCommand(FilterImp, o => false));
+            }
+        }
+
         private void AddNewUserImp(object o)
         {
-            var userCreationWindow = new PersonCreationWindow(AddUser);
+            var userCreationWindow = new PersonCreationWindow(AddUser, _update);
             userCreationWindow.Show();
+            _update(DisplayableUsers);
         }
 
         private void DeleteSelectedUserImp(object o)
         {
             var user = _getSelectedUser() as User;
 
-            Users.Remove(user);
+            InnerUsers.Remove(user);
+            DisplayableUsers.Remove(user);
 
-            _update(Users);
+            _update(DisplayableUsers);
         }
 
         private void SerializeImp(object o)
         {
-            User.SerializeAll(Users);
+            User.SerializeAll(InnerUsers);
         }
 
         private void EditImp(object o)
@@ -79,16 +108,30 @@ namespace Practice4
             var editWindow = new PersonCreationWindow(delegate (User edited)
             {
                 toEdit.CopyUser(edited);
-            }, toEdit);
+            }, _update, toEdit);
             editWindow.Show();
         }
 
-        public AllUsersViewModel(AllUsersWindow.UpdateGridDelegate updateDelegate, AllUsersWindow.GetSelectedIndexDelegate getSelectedIndexDelegate)
+        private void SortImp(object o)
+        {
+           DisplayableUsers = SortHelper.Sorted(DisplayableUsers, _sortOrder++%2==0, _getSelectedSortItem());
+           _update(DisplayableUsers);
+            InnerUsers = DisplayableUsers;
+        }
+
+        private void FilterImp(object o)
+        {
+
+        }
+
+        public AllUsersViewModel(AllUsersWindow.UpdateGridDelegate updateDelegate, AllUsersWindow.GetSelectedIndexDelegate getSelectedIndexDelegate, AllUsersWindow.GetSelectedSortItemDelegate getSelectedSortItem)
         {
             _update = updateDelegate;
             _getSelectedUser = getSelectedIndexDelegate;
-            Users = new List<User>();
-            User.Preload(Users);
+            _getSelectedSortItem = getSelectedSortItem;
+            DisplayableUsers = new List<User>();
+            User.Preload(DisplayableUsers);
+            _update(DisplayableUsers);
         }
 
         public delegate void DelegateAddUser(User u);
@@ -97,7 +140,8 @@ namespace Practice4
 
         private void AddUser(User u)
         {
-            Users.Add(u);
+            DisplayableUsers.Add(u);
+            InnerUsers = DisplayableUsers;
         }
                              
         #region Implementation

@@ -14,6 +14,7 @@ namespace Practice4
         private string _email;
         private DateTime _dateOfBirth;
         private RelayCommand _signInCommand;
+        private AllUsersWindow.UpdateGridDelegate _update;
         private readonly AllUsersViewModel.DelegateAddUser _proceedAction;
         private readonly PersonCreationWindow.DelegateCloseWindow _closeAction;
 
@@ -70,7 +71,7 @@ namespace Practice4
             }
         }
 
-        public PersonCreationViewModel(PersonCreationWindow.DelegateCloseWindow closeWindow, AllUsersViewModel.DelegateAddUser addUser, User u=null)
+        public PersonCreationViewModel(PersonCreationWindow.DelegateCloseWindow closeWindow, AllUsersViewModel.DelegateAddUser addUser, AllUsersWindow.UpdateGridDelegate _update, User u=null)
         {
             _closeAction = closeWindow;
             _proceedAction = addUser;

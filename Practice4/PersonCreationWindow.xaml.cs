@@ -10,10 +10,10 @@ namespace Practice4
     public partial class PersonCreationWindow : Window
     {
 
-        public PersonCreationWindow(AllUsersViewModel.DelegateAddUser delegateAddPerson, User u=null)
+        public PersonCreationWindow( AllUsersViewModel.DelegateAddUser delegateAddPerson, AllUsersWindow.UpdateGridDelegate _update, User u=null)
         {
             InitializeComponent();
-            DataContext = new PersonCreationViewModel(CloseWindow, delegateAddPerson, u);
+            DataContext = new PersonCreationViewModel(CloseWindow, delegateAddPerson, _update, u);
         }
 
         public delegate void DelegateCloseWindow();
